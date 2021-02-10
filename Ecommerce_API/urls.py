@@ -22,7 +22,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('product/',include('product.urls')),
-    path('sigin/',include('all_users.urls')),
-    path('', include('django.contrib.auth.urls')),
+    path('',include('all_users.urls')),
+    path('account/', include('django.contrib.auth.urls')),
+    path('order/',include('order.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

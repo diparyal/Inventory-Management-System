@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse
 
 
 
@@ -12,16 +13,42 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = User
-        # fields = '__all__'
+        fields = '__all__'
         
-        fields = ['username','email','password1','password2']
+        # fields = ['username','email','password1','password2']
 
 
 def SignUpView(request):
     if request.method == 'POST':
-        form = UserForm(request.POST)
-        form.save()
-        return redirect('login')
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        user_type = request.POST.get("user_types")
+        password1= request.POST.get("password1")
+        password2  = request.POST.get("password2")
+        if password1 == password2:
+            if user_type == "Seller":
+                User.objects.create_user(username=username,email=email,password=password1,is_seller=True)
+            else:
+                User.objects.create_user(username=username,email=email,password=password1,is_buyer=True)
+
+        # print(done)
+        # form = UserForm(request.POST)
+
+        # print(form)
+        # if form.is_valid():
+        #     uform = form.save(commit=False)
+
+        #     print(request.POST.get("user_types"))
+        #     val = request.POST.get("user_types")
+
+        #     if val == "Seller":
+        #         uform.is_seller= True
+        #     else:
+        #         uform.is_buyer = True
+
+        #     print(uform)
+            # form.save()
+            return redirect('login')
         # form = UserForm(request.POST)
         # print(request.POST)
         # return HttpResponse("Here's the text of the Web page.")
@@ -29,12 +56,9 @@ def SignUpView(request):
         # # if form.is_valid(): 
         # #     form.save()
         # #     return redirect('store')
-    else:
-        form = UserForm()
-        context = {'form' : form}
-        return render(request, 'all_users/register.html', context)  
-
-
+    
+    context = {'UserForm' : UserForm()}
+    return render(request, 'all_users/register.html', context)  
    # OR
 
    # class register(generic.CreateView):
@@ -42,5 +66,5 @@ def SignUpView(request):
    #  success_url = reverse_lazy('login')
    #  template_name = 'registration/signup.html'
 
-def home():
+def home(request):
     return HttpResponse("Here's the text of the Web page.")
