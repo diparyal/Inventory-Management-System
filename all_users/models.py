@@ -43,6 +43,7 @@ class User(AbstractUser):
    phone_no = models.CharField(max_length = 10) 
    is_seller = models.BooleanField(default=False)
    is_buyer = models.BooleanField(default=False)
+   is_admin = models.BooleanField(default=False)
    USERNAME_FIELD = 'email'
    REQUIRED_FIELDS = ['username'] 
 

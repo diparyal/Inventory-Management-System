@@ -37,6 +37,8 @@
     <input type="radio" id="Buyer" name="user_types" value="Buyer">
     <label for="Buyer"> Buyer</label><br>
 
+    <input type="radio" id="staff" name="user_types" value="Staff">
+    <label for="staff"> Staff</label><br>
 
     <div class="form-group">
         <i class="bi bi-key" style="font-size:2rem;margin-right:2px"></i>
@@ -54,11 +56,11 @@
 </form>
 
 
-<form method="post">
+<!-- <form method="post">
 {% csrf_token %}
 {{ UserForm.as_p }}
 <button type="submit">Sign Up</button>
-</form>
+</form> -->
 
 </div>
 

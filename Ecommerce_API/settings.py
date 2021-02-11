@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'all_users.apps.AllUsersConfig',
     'order.apps.OrderConfig',
+    'delivery.apps.DeliveryConfig',
+    'dashboard.apps.DashboardConfig',
     'rest_framework',
 ]
 
@@ -73,6 +75,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Ecommerce_API.wsgi.application'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
 
 
 # Database
@@ -115,9 +126,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+
 AUTH_USER_MODEL = 'all_users.User'
 
-LOGIN_REDIRECT_URL = '/home/'
+LOGIN_REDIRECT_URL = '/dashboard/home/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -137,6 +150,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [ os.path.join(BASE_DIR,'static') ]
 
 MEDIA_URL = '/images/'
 

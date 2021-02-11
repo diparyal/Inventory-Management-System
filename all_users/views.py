@@ -1,12 +1,29 @@
 from django.shortcuts import render,redirect
 from .models import User
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse
+from django import forms
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+from .serializers import UserSerializer
+from django.views.generic.list import ListView
+
+from rest_framework import generics
+# from django.utils.translation import gettext as _
+
+from .decorator import admin_status_required
 
 
 
 # Create your views here.
 class UserForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'placeholder':'Username'})
+        self.fields['email'].widget.attrs.update({'placeholder':'Email'})
+        self.fields['password1'].widget.attrs.update({'placeholder':'Password'})        
+        self.fields['password2'].widget.attrs.update({'placeholder':'Repeat password'})
+
     #Edit label
     # password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     # password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
@@ -14,6 +31,12 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = '__all__'
+        # widgets = {
+        # 'username': forms.fields.TextInput(attrs={'placeholder': 'Your Name'}),
+        # 'email': forms.fields.TextInput(attrs={'placeholder': 'Email Address'}),
+        # # 'password1': forms.fields.CharField(attrs={'placeholder': 'Password'}),
+        # # 'password2': forms.fields.CharField(attrs={'placeholder': 'Password confirmation'}),
+        # }
         
         # fields = ['username','email','password1','password2']
 
@@ -28,8 +51,10 @@ def SignUpView(request):
         if password1 == password2:
             if user_type == "Seller":
                 User.objects.create_user(username=username,email=email,password=password1,is_seller=True)
-            else:
+            elif user_type == "Buyer":
                 User.objects.create_user(username=username,email=email,password=password1,is_buyer=True)
+            else:
+                User.objects.create_user(username=username,email=email,password=password1,is_admin=True)
 
         # print(done)
         # form = UserForm(request.POST)
@@ -66,5 +91,20 @@ def SignUpView(request):
    #  success_url = reverse_lazy('login')
    #  template_name = 'registration/signup.html'
 
-def home(request):
-    return HttpResponse("Here's the text of the Web page.")
+
+# Create your views here.
+
+class UserView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+@admin_status_required
+def UserList(request):
+
+    context = {'Users': User.objects.all()}
+
+    return render(request, 'all_users/user_list.html', context) 
+
+
+

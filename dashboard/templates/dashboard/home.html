@@ -1,0 +1,129 @@
+
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+
+<div class="container row">
+<div class="col-2">
+<div class="card text-white bg-primary my-3" style="max-width: 18rem;">
+  <div class="card-header">Product</div>
+  <div class="card-body">
+    <!-- <h5 class="card-title">Primary card title</h5> -->
+    <p class="card-text">12</p>
+  </div>
+</div>
+</div>
+
+<div class="col-2">
+<div class="card text-white bg-secondary my-3" style="max-width: 18rem;">
+  <div class="card-header">Order</div>
+  <div class="card-body">
+    <!-- <h5 class="card-title">Secondary card title</h5> -->
+    <p class="card-text">1</p>
+  </div>
+</div>
+</div>
+
+</div>
+
+
+{% if orders %}
+<div class="container col-6">
+<table class="table table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Order ID</th>
+      <th scope="col">UserName</th>
+      <th scope="col">Product</th>
+      <th scope="col">Units</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders%}
+    <tr>
+      <th scope="row">{{ order.id }}</th>
+      <td>{{ order.supplier.username}}</td>
+      <td>{{ order.product }}</td>
+      <td>{{ order.units }}</td>
+      <td>{{ order.status }}</td>
+    </tr>
+    {% endfor %}
+    
+  </tbody>
+</table>
+
+</div>
+{% endif %}
+
+
+
+<div class="container row">
+<div class="col-6">
+<table class="table table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<div class="col-6">
+<table class="table table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+{% endblock content %}
