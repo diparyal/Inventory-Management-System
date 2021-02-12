@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import User
+from .models import User,StaffRequest
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
@@ -12,10 +12,14 @@ from rest_framework import generics
 # from django.utils.translation import gettext as _
 
 from .decorator import admin_status_required
+from django.contrib import messages
+# from django.forms import ModelForm
+
 
 
 
 # Create your views here.
+
 class UserForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -54,8 +58,17 @@ def SignUpView(request):
             elif user_type == "Buyer":
                 User.objects.create_user(username=username,email=email,password=password1,is_buyer=True)
             else:
-                User.objects.create_user(username=username,email=email,password=password1,is_admin=True)
-
+                # redirect
+                staff= StaffRequest.objects.filter(email=email,password=password1).exist()
+                if staff:
+                    messages.success(request, 'User is Already Registered.')
+                    return redirect('login')
+                else:    
+                    messages.success(request, 'We will notify and verify your account creation.')
+                    StaffRequest.objects.create(username=username,email=email,password=password1)
+                return redirect('/')
+                # User.objects.create_user(username=username,email=email,password=password1,is_admin=True)
+                
         # print(done)
         # form = UserForm(request.POST)
 
@@ -99,12 +112,50 @@ class UserView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
 
 
+@login_required()
+def updateOrder(request, pk):
+    order = BookOrder.objects.get(id=pk)
+    formset = OrderForm(instance=order)
+
+    if request.method == 'POST':
+        formset = OrderForm(request.POST, instance=order)
+        if formset.is_valid():
+            formset.save()
+            return redirect('/')
+
+    context = {'formset': formset}
+    return render(request, 'library/order_form.html', context)
+
+
+@admin_status_required
+def StaffApproved(request,pk):
+    # staff = StaffRequest.objects.get(id=pk).update(status='Approved') OR 
+
+    staff = StaffRequest.objects.get(id=pk)
+    staff.status = 'Approved'
+    staff.save()
+    print(staff)
+
+    User.objects.create_user(username=staff.username,email=staff.email,password=staff.password,is_admin=True)
+    #here we should use AJax
+    return redirect('staff_list')
+
+
+@admin_status_required
+def StaffList(request):
+    context = {'formset': StaffRequest.objects.filter(status='pending')}
+    return render(request, 'all_users/approve_user.html', context)
+
+
+
 @admin_status_required
 def UserList(request):
 
     context = {'Users': User.objects.all()}
 
     return render(request, 'all_users/user_list.html', context) 
+
+
 
 
 

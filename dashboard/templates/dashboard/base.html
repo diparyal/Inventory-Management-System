@@ -32,8 +32,9 @@
               User
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{% url 'add_product'%}">Add User</a></li>
+              <!-- <li><a class="dropdown-item" href="{% url 'signup'%}">Add User</a></li> -->
               <li><a class="dropdown-item" href="{% url 'all_users'%}">View Users</a></li>
+              <li><a class="dropdown-item" href="{% url 'staff_list'%}">User Request</a></li>
             </ul>
           </li>
           {% endif %}
@@ -59,7 +60,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" aria-current="page" href="#">Home</a>
           </li>
 
           <li class="nav-item">
@@ -79,6 +80,14 @@
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
           </li>
         </ul>
+
+
+        {% if user.is_authenticated %}
+
+        <button class="btn btn-link" href="{% url 'logout' %}" > logout</button> 
+
+        {% endif %}
+
 
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

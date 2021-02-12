@@ -8,6 +8,6 @@ from order.models import Order
 def home(request):
     # order = Order.objects.all()
     order = Order.objects.filter(supplier__isnull=True)
-    context={'orders':order}
+    context={'orders':order,'all':{'pro':1,'val':2}}
     return render(request,'dashboard/home.html',context)
 

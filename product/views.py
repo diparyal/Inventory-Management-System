@@ -4,6 +4,7 @@ from .models import Product
 from .serializers import ProductSerializer
 
 from rest_framework import generics
+from django.contrib.auth.decorators import login_required
 
 
 # create a ModelForm 
@@ -19,6 +20,8 @@ class ProductView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+
+@login_required()
 def ProductAdd(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
@@ -29,5 +32,6 @@ def ProductAdd(request):
     ProForm = ProductForm()
     context = { 'ProductForm': ProForm}
     return render(request,'product/addproduct.html',context)
+
 
 

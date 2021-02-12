@@ -40,7 +40,7 @@ class User(AbstractUser):
    username = models.CharField(max_length = 50, blank = True, null = True, unique = True) 
    email = models.EmailField(max_length = 25, unique = True) 
    
-   phone_no = models.CharField(max_length = 10) 
+   phone_no = models.CharField(max_length = 20) 
    is_seller = models.BooleanField(default=False)
    is_buyer = models.BooleanField(default=False)
    is_admin = models.BooleanField(default=False)
@@ -70,6 +70,23 @@ class User(AbstractUser):
 
 #     def __str__(self):
 #         return self.name
+
+class StaffRequest(models.Model):
+  STATUS_CHOICE = (
+        ('pending', 'Pending'),
+        ('decline', 'Decline'),
+        ('approved', 'Approved'),
+    )
+
+  username = models.CharField(max_length = 50, blank = True, null = True, unique = True) 
+  email = models.EmailField(max_length = 25, unique = True) 
+  # phone_no = models.CharField(max_length = 20) 
+  status = models.CharField(max_length=10, choices=STATUS_CHOICE,default='pending')
+  password = models.CharField(max_length=25)
+
+
+  def __str__(self):
+    return  self.username 
 
 
 

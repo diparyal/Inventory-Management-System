@@ -18,10 +18,20 @@
 <div class="container">
 <h2>Login Form</h2>
 <form method="post">
+<!--   {% csrf_token %}
+  {% for field in form %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }} 
+        {{ field }}
+
+    </div>
+  {% endfor %} -->
+
   {% csrf_token %}
   {{ form.as_p }}
 
-  <<!-- div class="form-group">
+  <!-- div class="form-group">
     <i class="bi bi-envelope-open" style="font-size:2rem;margin-right:2px"></i>       
     {{ form.email }}
     </div><div class="form-group">

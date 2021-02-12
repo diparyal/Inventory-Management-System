@@ -3,6 +3,8 @@ from .models import Order
 from .serializers import OrderSerializer
 
 from rest_framework import generics
+from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -13,7 +15,7 @@ class OrderView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
 
 
-
+@login_required()
 def AllOrder(request):
     order = Order.objects.all()
     context={'orders':order}
