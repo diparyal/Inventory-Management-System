@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'delivery.apps.DeliveryConfig',
     'dashboard.apps.DashboardConfig',
     'rest_framework',
+    'crispy_forms',
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -131,6 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'all_users.User'
 
 LOGIN_REDIRECT_URL = '/dashboard/home/'
+LOGOUT_REDIRECT_URL = '/login/' # new
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -156,3 +159,7 @@ STATICFILES_DIRS = [ os.path.join(BASE_DIR,'static') ]
 MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'static/images')
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

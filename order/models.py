@@ -14,7 +14,7 @@ class Order(models.Model):
     supplier = models.ForeignKey(User, on_delete=models.CASCADE, null=True,related_name="supplier")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, null=True,related_name="buyer")
-    status = models.CharField(max_length=10, choices=STATUS_CHOICE)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICE,default='pending')
     units = models.IntegerField()
     created_date = models.DateField(auto_now_add=True)
 

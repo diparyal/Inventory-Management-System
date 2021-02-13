@@ -12,6 +12,7 @@
       <th scope="col">UserName</th>
       <th scope="col">Email</th>
       <th scope="col">Phone No</th>
+      <th scope="col"> Status </th>
       <!-- <th scope="col">Action</th> -->
       <th>Update</th>
       <th>Delete</th>
@@ -24,6 +25,14 @@
       <td>{{ user.username}}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.phone_no }}</td>
+      {% if user.is_seller %}      
+      <td>Seller</td>
+      {% elif user.is_buyer %}
+      <td>Buyer</td>
+      {% else %}
+      <td>Staff</td>
+      {% endif %}
+
       <td><a class="btn btn-sm btn-info" href="#">Update</a></td>
       <td><a class="btn btn-sm btn-danger" href="#">Delete</a></td>
 

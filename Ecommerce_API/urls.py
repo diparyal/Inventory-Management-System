@@ -22,11 +22,11 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('product/',include('product.urls')),
-    path('',include('all_users.urls')),
+    path('register/',include('all_users.urls')),
     path('order/',include('order.urls')),
     path('delivery/',include('delivery.urls')),
     path('dashboard/',include('dashboard.urls')),   
-    path('account/', include('django.contrib.auth.urls')),
+    path('', include('django.contrib.auth.urls')),
     
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

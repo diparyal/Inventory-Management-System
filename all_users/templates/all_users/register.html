@@ -29,22 +29,27 @@
 </ul>
 {% endif %}
 
+{% load crispy_forms_tags %}
 
+<div class="col-6 ">
 <form method="post">
      {% csrf_token %}
+
     <div class="form-group">
     <i class="bi bi-person-fill" style="font-size:2rem;margin-right:2px"></i>
-      {{ UserForm.username }}
+      {{ UserForm.username|as_crispy_field  }}
       {{ form.username.errors }}
     </div>
     <div class="form-group">
     <i class="bi bi-envelope-open" style="font-size:2rem;margin-right:2px"></i>       
-    {{ UserForm.email }}
+    {{ UserForm.email|as_crispy_field  }}
     {{ form.email.errors }}
     </div>
 
+    <div>
+    <!-- <p>Please select any one of the following:</p> -->
     <input type="radio" id="Seller" name="user_types" value="Seller">
-    <label for="Seller"> Seller</label><br>
+    <label for="Seller"> Seller </label><br>
 
     <input type="radio" id="Buyer" name="user_types" value="Buyer">
     <label for="Buyer"> Buyer</label><br>
@@ -52,20 +57,23 @@
     <input type="radio" id="staff" name="user_types" value="Staff">
     <label for="staff"> Staff</label><br>
 
+    </div>
+
     <div class="form-group">
         <i class="bi bi-key" style="font-size:2rem;margin-right:2px"></i>
-     {{ UserForm.password1 }}
+     {{ UserForm.password1|as_crispy_field  }}
      {{ form.password1.errors }}
     </div>
     <div class="form-group">
         <i class="bi bi-key" style="font-size:2rem;margin-right:2px"></i>
-      {{ UserForm.password2 }}
+      {{ UserForm.password2|as_crispy_field  }}
       {{ form.password2.errors }}
     </div>
     <div class="my-3">
       <input type="submit" class="btn btn-primary" value="Register">
       </div>
 </form>
+</div>
 
 
 <!-- <form method="post">
