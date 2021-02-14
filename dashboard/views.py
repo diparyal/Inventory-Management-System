@@ -11,19 +11,48 @@ from django.http import JsonResponse
 @login_required()
 def home(request):
     # order = Order.objects.all()
-    pro_count = Product.objects.count()
-    order_count = Order.objects.count()
-    buyers = Order.objects.filter(supplier__isnull=True,status='pending')
-    # print(buyers)
-    suppliers = Order.objects.filter(buyer__isnull=True,status='pending')
-    app_order = Order.objects.filter(status='approved')
 
-    context={'buyers':buyers, 'suppliers':suppliers ,'card':{'Product':pro_count,
-    'Order':order_count,'Buyer Order': buyers.count(),'Suppliers Order':suppliers.count() }
-    ,'app_order': app_order}
+    
+    context={}
+    if request.user.is_buyer:
+        # buyers = Order.objects.filter(supplier__isnull=True,buyer=request.user.id,status='pending')
+        buyers = Order.objects.filter(buyer=request.user.id,status='pending')
+        # print(buyers.values('product').distinct())
+        # print(Order.objects.filter(buyer=request.user.id).values('product').count())
+
+        pro_count = Order.objects.filter(buyer=request.user.id).values('product').distinct().count()
+        order_count = Order.objects.filter(buyer=request.user.id).count()
+
+        app_order = Order.objects.filter(status='approved',buyer=request.user.id)
+        context= {'buyers':buyers,'card':{'Product':pro_count,'Total Order':order_count,
+        'Pending Order': buyers.count() },'app_order': app_order}
+
+    elif request.user.is_seller:
+        # suppliers = Order.objects.filter(buyer__isnull=True,supplier=request.user.id,status='pending')
+        suppliers = Order.objects.filter(supplier=request.user.id,status='pending')
+        app_order = Order.objects.filter(status='approved',supplier=request.user.id)
+
+        pro_count = Order.objects.filter(supplier=request.user.id).values('product').distinct().count()
+        order_count = Order.objects.filter(supplier=request.user.id).count()
+
+        context={'suppliers':suppliers ,'card':{'Product':pro_count,
+        'Total Order':order_count,'Pending Order':suppliers.count() },'app_order': app_order}
+
+    else:
+        buyers = Order.objects.filter(supplier__isnull=True,status='pending')
+        suppliers = Order.objects.filter(buyer__isnull=True,status='pending')
+        app_order = Order.objects.filter(status='approved')
+        pro_count = Product.objects.count()
+        order_count = Order.objects.count()
+
+        context={'buyers':buyers, 'suppliers':suppliers ,'card':{'Product':pro_count,
+        'Order(All)':order_count,'Buyer Order(New)': buyers.count(),'Suppliers Order(New)':suppliers.count() }
+        ,'app_order': app_order}
+
+    
     return render(request,'dashboard/home.html',context)
 
-
+@login_required()
 def statusupdate(request):
     # staff = StaffRequest.objects.get(id=pk).update(status='Approved') OR
     data = json.loads(request.body)

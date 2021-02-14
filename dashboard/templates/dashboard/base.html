@@ -70,7 +70,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{% url 'all_order'%}">View Order</a></li>
-              {% if user.is_buyer and user.is_seller %}
+              {% if user.is_buyer or user.is_seller %}
               <li><a class="dropdown-item" href="{% url 'add_order'%}">Add Order</a></li>
               {% endif %}
             </ul>

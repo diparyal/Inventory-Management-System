@@ -19,16 +19,23 @@
 </div>
 
 
-<div class="container row">
-<div class="col-6">
+<div class="row">
 {% if buyers %}
+<div class="col-6">
 <div class="container">
+  {% if user.is_buyer %}
+  <h3>Your Orders</h3>
+  {% else %}
   <h3>Buyer Orders</h3>
+  {% endif %}
+
+
 <table class="table table-hover table-bordered">
   <thead class="table-dark">
     <tr>
       <th scope="col">Order ID</th>
       <th scope="col">UserName</th>
+      <th scope="col">Email</th>
       <th scope="col">Product</th>
       <th scope="col">Units</th>
       <th scope="col">Status</th>
@@ -39,6 +46,7 @@
     <tr id={{buyer.id}}>
       <th scope="row">{{ buyer.id }}</th>
       <td>{{ buyer.buyer.username}}</td>
+      <td>{{ buyer.buyer.email}}</td>
       <td>{{ buyer.product }}</td>
       <td>{{ buyer.units }}</td>
       {% if user.is_admin %}
@@ -74,15 +82,22 @@
 
 </div>
 
-<div class="col-6">
+
 {% if suppliers %}
+<div class="col-6">
 <div class="container">
+  {% if user.is_seller %}
+  <h3>Your Orders</h3>
+  {% else %}
   <h3>Supplier Orders</h3>
+  {% endif %}
+
 <table class="table table-hover table-bordered">
   <thead class="table-dark">
     <tr>
       <th scope="col">Order ID</th>
       <th scope="col">UserName</th>
+      <th scope="col">Email</th>
       <th scope="col">Product</th>
       <th scope="col">Units</th>
       <th scope="col">Status</th>
@@ -93,6 +108,7 @@
     <tr id={{supplier.id}}>
       <th scope="row">{{ supplier.id }}</th>
       <td>{{ supplier.supplier.username}}</td>
+      <td>{{ supplier.supplier.email}}</td>
       <td>{{ supplier.product }}</td>
       <td>{{ supplier.units }}</td>
 
@@ -128,7 +144,7 @@
   </tbody>
 </table>
 
-</div>
+<!-- </div> -->
 {% endif %}
 </div>
 
@@ -142,6 +158,7 @@
     <tr>
       <th scope="col">Order ID</th>
       <th scope="col">UserName</th>
+      <th scope="col">Email</th>
       <th scope="col">Product</th>
       <th scope="col">Units</th>
       <th scope="col">Status</th>
@@ -153,8 +170,10 @@
       <th scope="row">{{ supplier.id }}</th>
       {% if supplier.supplier.is_seller%}
       <td>{{ supplier.supplier.username}}</td>
+      <td>{{ supplier.supplier.email}}</td>
       {% else %}
       <td>{{ supplier.buyer.username}}</td>
+      <td>{{ supplier.buyer.email}}</td>
       {% endif %}
       <td>{{ supplier.product }}</td>
       <td>{{ supplier.units }}</td>
