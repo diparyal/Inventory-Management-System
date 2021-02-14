@@ -20,7 +20,7 @@
 
 
 <div class="container row">
-<div class="col-5">
+<div class="col-6">
 {% if buyers %}
 <div class="container">
   <h3>Buyer Orders</h3>
@@ -74,7 +74,7 @@
 
 </div>
 
-<div class="col-5">
+<div class="col-6">
 {% if suppliers %}
 <div class="container">
   <h3>Supplier Orders</h3>
@@ -134,6 +134,68 @@
 
 </div>
 
+<div class="col">
+<div class="container">
+  <h3>Approved Order </h3>
+<table  class="table table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Order ID</th>
+      <th scope="col">UserName</th>
+      <th scope="col">Product</th>
+      <th scope="col">Units</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody id="myTable">
+    {% for supplier in app_order%}
+    <tr id={{supplier.id}}>
+      <th scope="row">{{ supplier.id }}</th>
+      {% if supplier.supplier.is_seller%}
+      <td>{{ supplier.supplier.username}}</td>
+      {% else %}
+      <td>{{ supplier.buyer.username}}</td>
+      {% endif %}
+      <td>{{ supplier.product }}</td>
+      <td>{{ supplier.units }}</td>
+
+      {% if user.is_admin %}
+      <td><div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ supplier.status }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item update-order" data-product={{ supplier.id }} data-action="Approve" >Approved</a></li>
+            <li><a class="dropdown-item update-order" data-product={{ supplier.id }} data-action="Decline" >Decline</a></li>
+          </ul>
+        </div>
+      </td>
+      {% else %}
+
+      <td>{{ supplier.status }}</td>
+
+
+      {% endif %}
+
+
+<!--       {% if user.is_admin %}
+
+      <td><a class="btn btn-sm btn-info" href="#">Update</a></td>
+      {% endif %} -->
+
+
+    </tr>
+
+    {% endfor %}
+    
+  </tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
 
 {% endblock content %}
 

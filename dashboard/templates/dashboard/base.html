@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <script type="text/javascript">
       
-      function getCookie(name) {
+    function getCookie(name) {
       val = document.cookie.split('; ').find(row => row.startsWith(`${name}=`))
       if (val){
         return val.split('=')[1]
@@ -145,9 +145,18 @@
             })
             .then((data) => {
               console.log(data['productId'])
+              console.log(data['app_detail'])
+
               var row = document.getElementById(`${data['productId']}`.trim());
               row.parentNode.removeChild(row);
 
+              var table = document.getElementById("myTable");
+              var row = table.insertRow(0);
+              var cell1 = row.insertCell(0).innerHTML = data['app_detail']['id'];
+              var cell2 = row.insertCell(1).innerHTML = data['app_detail']['username']
+              var cell2 = row.insertCell(2).innerHTML = data['app_detail']['product']
+              var cell2 = row.insertCell(3).innerHTML = data['app_detail']['units']
+              var cell2 = row.insertCell(4).innerHTML = "Approved"
         })
 
           })
