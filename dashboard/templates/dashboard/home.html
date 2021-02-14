@@ -3,35 +3,26 @@
 {% block content %}
 
 <div class="container row">
+{% for k,v in card.items %}
+
 <div class="col-2">
 <div class="card text-white bg-primary my-3" style="max-width: 18rem;">
-  <div class="card-header">Product</div>
-  <div class="card-body">
-    <!-- <h5 class="card-title">Primary card title</h5> -->
-    <p class="card-text">{{ pro_count }}</p>
-  </div>
-</div>
-</div>
-
-
-<div class="col-2">
-<div class="card text-white bg-secondary my-3" style="max-width: 18rem;">
-  <div class="card-header">Order</div>
+  <div class="card-header">{{ k }}</div>
   <div class="card-body">
     <!-- <h5 class="card-title">Secondary card title</h5> -->
-    <p class="card-text">{{ order_count }}</p>
+    <p class="card-text">{{ v }}</p>
   </div>
 </div>
 </div>
 
+{% endfor%}
 </div>
-
 
 
 <div class="container row">
-<div class="col-6">
+<div class="col-5">
 {% if buyers %}
-<div class="container col-6">
+<div class="container">
   <h3>Buyer Orders</h3>
 <table class="table table-hover table-bordered">
   <thead class="table-dark">
@@ -45,12 +36,32 @@
   </thead>
   <tbody>
     {% for buyer in buyers%}
-    <tr>
+    <tr id={{buyer.id}}>
       <th scope="row">{{ buyer.id }}</th>
       <td>{{ buyer.buyer.username}}</td>
       <td>{{ buyer.product }}</td>
       <td>{{ buyer.units }}</td>
+      {% if user.is_admin %}
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ buyer.status }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item update-order" data-product={{ buyer.id }} data-action="Approve">Approved</a></li>
+            <li><a class="dropdown-item update-order" data-product={{ buyer.id }} data-action="Decline">Decline</a></li>
+          </ul>
+        </div>
+      </td>
+      {% else %}
+
       <td>{{ buyer.status }}</td>
+
+      {% endif %}
+
+     <!--  {% if user.is_admin %}
+      <td><a class="btn btn-sm btn-info" href="#">Update</a></td>
+      {% endif %} -->
 
     </tr>
     {% endfor %}
@@ -63,9 +74,9 @@
 
 </div>
 
-<div class="col-6">
+<div class="col-5">
 {% if suppliers %}
-<div class="container col-6">
+<div class="container">
   <h3>Supplier Orders</h3>
 <table class="table table-hover table-bordered">
   <thead class="table-dark">
@@ -79,14 +90,39 @@
   </thead>
   <tbody>
     {% for supplier in suppliers%}
-    <tr>
+    <tr id={{supplier.id}}>
       <th scope="row">{{ supplier.id }}</th>
       <td>{{ supplier.supplier.username}}</td>
       <td>{{ supplier.product }}</td>
       <td>{{ supplier.units }}</td>
+
+      {% if user.is_admin %}
+      <td><div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ supplier.status }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item update-order" data-product={{ supplier.id }} data-action="Approve" >Approved</a></li>
+            <li><a class="dropdown-item update-order" data-product={{ supplier.id }} data-action="Decline" >Decline</a></li>
+          </ul>
+        </div>
+      </td>
+      {% else %}
+
       <td>{{ supplier.status }}</td>
 
+
+      {% endif %}
+
+
+<!--       {% if user.is_admin %}
+
+      <td><a class="btn btn-sm btn-info" href="#">Update</a></td>
+      {% endif %} -->
+
+
     </tr>
+
     {% endfor %}
     
   </tbody>
@@ -98,4 +134,7 @@
 
 </div>
 
+
 {% endblock content %}
+
+
