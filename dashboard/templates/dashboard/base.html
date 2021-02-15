@@ -75,6 +75,24 @@
               {% endif %}
             </ul>
           </li>
+          <li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99</span>
+              <i class="bi bi-bell"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#"> Order Approved for PRoduct</a></li>
+              <li><a class="dropdown-item" href="#"> Order Approved for PRoduct</a></li>
+            </ul>
+          </li>
+ <!--          <li>
+            <button type="button" class="btn btn-primary position-relative">
+        Notifications <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
+      </button>
+          </li> -->
+
 
           <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -102,12 +120,13 @@
         
         <a class="mx-2" href="{% url 'logout' %}">Log Out</a>
 
-
-
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
+
+        
+
       </div>
     </div>
   </nav>

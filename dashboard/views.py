@@ -89,6 +89,7 @@ def statusupdate(request):
     # approve_order={'id':staff.id,'username':staff.username}
 
     approve_order.save()
+    
 
     # return JsonResponse('Payment submitted..', safe=False)
     return JsonResponse({ 'productId':productId,'app_detail':app_detail })
