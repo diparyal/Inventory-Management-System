@@ -1,0 +1,51 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+
+
+<!-- <div class="row"> -->
+
+<div class="container">
+<!-- <div class="col-6"> -->
+
+
+  <h3>Your Bill</h3>
+
+
+<table class="table table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Order ID</th>
+      <!-- <th scope="col">UserName</th>
+      <th scope="col">Email</th> -->
+      <th scope="col">Product</th>
+      <th scope="col">Units</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for buyer in order%}
+    <tr id={{buyer.id}}>
+      <th scope="row">{{ buyer.id }}</th>
+<!--       <td>{{ buyer.username}}</td>
+      <td>{{ buyer.email}}</td> -->
+      <td>{{ buyer.product }}</td>
+      <td>{{ buyer.units }}</td>
+      <td>{{ buyer.product.price }}</td>
+    </tr>
+    {% endfor %}
+    
+  </tbody>
+</table>
+<p>Total : {{ total }}</p>
+
+<!-- </div> -->
+
+
+<!-- </div> -->
+
+</div>
+
+
+
+{% endblock %}

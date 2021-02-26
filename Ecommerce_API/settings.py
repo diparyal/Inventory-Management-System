@@ -43,9 +43,10 @@ INSTALLED_APPS = [
     'order.apps.OrderConfig',
     'delivery.apps.DeliveryConfig',
     'dashboard.apps.DashboardConfig',
+    'billing.apps.BillingConfig',
     'rest_framework',
-    'crispy_forms',
-    "crispy_bootstrap5",
+    # 'crispy_forms',
+    # "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [

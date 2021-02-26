@@ -62,6 +62,13 @@
               <li><a class="dropdown-item" href="#">Another action</a></li>
             </ul>
           </li>
+
+          {% else %}
+          <li class="nav-item dropdown">
+          <a class="nav-link" href="{% url 'user_bill'%}" role="button" aria-expanded="false">Bill
+          </a>
+          </li>
+
           {% endif %}
 
           <li class="nav-item dropdown">
@@ -77,16 +84,13 @@
           </li>
           <li>
 
-            <li class="nav-item dropdown">
-            <a class="nav-link " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99</span>
-              <i class="bi bi-bell"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#"> Order Approved for PRoduct</a></li>
-              <li><a class="dropdown-item" href="#"> Order Approved for PRoduct</a></li>
-            </ul>
+          <li>
+            <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search Product" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> 
           </li>
+
  <!--          <li>
             <button type="button" class="btn btn-primary position-relative">
         Notifications <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
@@ -104,31 +108,40 @@
             </ul>
           </li> -->
 
-          {% if user.is_authenticated %}
-
-          <li>
-              <p class="mx-2 position-absolute top-50 start-50 translate-middle">Hello,{{ user.username }}</p>
-
-          </li>
+          
         </ul>
 
-        {% endif %}
+         </div>
         
 
         <!-- <button class="btn btn-link" href="{% url 'logout' %}" > logout</button>  -->
 
+         {% if user.is_authenticated %}
+
+          <li class="nav-item" style="list-style: none;">
+              <p class="mx-2">Hello,{{ user.username }}</p>
+
+          </li>
+          {% endif %}
+
+        <!-- <li class="mx-1" style="list-style: none;"><p>hellos</p></li> -->
         
+        <li class="nav-item dropdown dropstart" style="list-style: none;">
+        <a class="nav-link " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99</span>
+        <i class="bi bi-bell"></i></a>
+        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#"> Order Approved for PRoduct</a></li>
+            <li><a class="dropdown-item" href="#"> Order Approved for PRoduct</a></li>
+          </ul>
+        </li>
+
         <a class="mx-2" href="{% url 'logout' %}">Log Out</a>
 
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-
+        <!-- Remove Dot -->
         
-
-      </div>
-    </div>
+ 
+  
   </nav>
 
   </head>
@@ -137,6 +150,7 @@
 
     {% endblock%}
     <script type="text/javascript">
+
   
     var updateBtns = document.getElementsByClassName('update-order')
 

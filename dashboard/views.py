@@ -12,7 +12,6 @@ from django.http import JsonResponse
 def home(request):
     # order = Order.objects.all()
 
-    
     context={}
     if request.user.is_buyer:
         # buyers = Order.objects.filter(supplier__isnull=True,buyer=request.user.id,status='pending')

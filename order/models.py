@@ -18,6 +18,11 @@ class Order(models.Model):
     units = models.IntegerField()
     created_date = models.DateField(auto_now_add=True)
 
-
     def __str__(self):
         return self.product.name
+
+    # @product
+    # def get_total(self):
+    #     return 
+
+
